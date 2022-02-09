@@ -88,5 +88,6 @@ void	rotate_all(t_vars *vars)
 			ft_rotate_a(vars, 0);
 		else
 			ft_rotate_all_2(vars);
+		free(vars->check_str);
 	}
 }
