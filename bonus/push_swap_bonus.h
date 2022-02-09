@@ -10,18 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef PUSH_SWAP_BONUS_H
+# define PUSH_SWAP_BONUS_H
 
-# include "./push_swap.h"
+# include "./push_swap_bonus.h"
 # include "../libft/libft.h"
 # include "../ft_printf/ft_printf.h"
+# include "../get_next_line/get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
 # include <limits.h>
 # include <stdio.h>
-# define BUFFER_SIZE 4096
+# define BUFFER_SIZE 1
 
 typedef struct s_vars
 {
@@ -47,8 +48,16 @@ typedef struct s_vars
 	int		min;
 	int		min2;
 	int		size;
+	char	*check_str;
 }t_vars;
-
+void	ft_rotate_all_2(t_vars *vars);
+t_data	*ft_create_data(int num);	
+void	ft_print_all_num(t_list *lst, char *str);
+void	rotate_all(t_vars *vars);
+char	*ft_strjoin_mod(char *s1, char *s2);
+char	*ft_strdup_mod(char *s, int check);
+int		ft_strchr_mod(const char *s, char c);
+int		ft_strlen_mod(const char *s);
 void	ft_correct_push(t_vars *vars, t_list *low);
 void	ft_doble_rotate(t_list *low, t_vars *vars);
 void	ft_rotatefin(t_list *low, t_vars *vars);

@@ -1,42 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   checker_util.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mandriic <mandriic@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 11:52:54 by mandriic          #+#    #+#             */
-/*   Updated: 2022/02/08 11:53:00 by mandriic         ###   ########.fr       */
+/*   Created: 2022/02/09 15:03:16 by mandriic          #+#    #+#             */
+/*   Updated: 2022/02/09 15:03:20 by mandriic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./push_swap.h"
+#include "./push_swap_bonus.h"
+#include <unistd.h>
 
-void	ft_max_min(void *data)
+int	ft_check(t_list *temp_a)
 {
-	if (*(int *)((t_data *)data)->max < ((int)((t_data *)data)->num))
+	int	len;
+	int	count;
+
+	len = ft_lstsize(temp_a);
+	count = 1;
+	while (temp_a->next)
 	{
-		*(int *)((t_data *)data)->max = (int)((t_data *)data)->num;
+		if (temp_a->content->num < temp_a->next->content->num)
+			temp_a = temp_a->next;
+		else
+			return (1);
+		count++;
 	}
-	if (*(int *)((t_data *)data)->min > ((int)((t_data *)data)->num))
-	{
-		*(int *)((t_data *)data)->min = (int)((t_data *)data)->num;
-	}
+	if (count == len)
+		return (0);
+	return (1);
 }
 
-t_data	*ft_create_data(int num)
+void	ft_isrepite(t_vars *vars)
 {
-	t_data		*data;
-	static int	min = 2147483647;
-	static int	max = -2147483648;
+	t_list		*temp_a;
+	t_list		*temp_a_sec;
+	long long	num;
 
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (0);
-	data->num = num;
-	data->min = &min;
-	data->max = &max;
-	return (data);
+	temp_a = vars->list_a;
+	while (temp_a)
+	{
+		temp_a_sec = vars->list_a;
+		num = temp_a->content->num;
+		while (temp_a_sec != temp_a && temp_a_sec)
+		{
+			if (temp_a->content->num == temp_a_sec->content->num
+				|| num > INT_MAX)
+				ft_error_fn();
+			temp_a_sec = temp_a_sec->next;
+		}
+		temp_a = temp_a->next;
+	}
 }
 
 int	ft_check_strting(char *string)
@@ -93,24 +109,21 @@ void	pars_string(t_vars *vars, char *string)
 	}
 }
 
-void	ft_isrepite(t_vars *vars)
+void	ft_pars(t_vars *vars, char **argv)
 {
-	t_list		*temp_a;
-	t_list		*temp_a_sec;
-	long long	num;
+	int	i;
 
-	temp_a = vars->list_a;
-	while (temp_a)
+	i = 1;
+	if (!argv[i][0])
 	{
-		temp_a_sec = vars->list_a;
-		num = temp_a->content->num;
-		while (temp_a_sec != temp_a && temp_a_sec)
-		{
-			if (temp_a->content->num == temp_a_sec->content->num
-				|| num > INT_MAX)
-				ft_error_fn();
-			temp_a_sec = temp_a_sec->next;
-		}
-		temp_a = temp_a->next;
+		ft_error_fn();
 	}
+	while (argv[i] && argv[i][0])
+	{
+		pars_string(vars, &argv[i][0]);
+		i++;
+	}
+	ft_isrepite(vars);
+	i = ft_lstsize(vars->list_a);
+	rotate_all(vars);
 }

@@ -12,9 +12,9 @@
 
 #include "./push_swap.h"
 
-void	ft_error_fn(char *s)
+void	ft_error_fn(void)
 {
-	ft_printf("ERROR%s\n", s);
+	write(2, "Error\n", 6);
 	exit(1);
 }
 

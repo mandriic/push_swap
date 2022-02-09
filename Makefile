@@ -19,13 +19,23 @@ SOURCES_FILES	=	push_swap.c\
 					oper_rot_revrot.c\
 					oper_doble_push.c\
 
-
+SRC_DIR_BONUS	= 	./bonus
+SRC_FILES_BONUS	=	checker.c\
+					oper_doble_push_bonus.c\
+					oper_rot_revrot_bonus.c\
+					oper_swap_bonus.c\
+					../get_next_line/get_next_line.c\
+					../get_next_line/get_next_line_utils.c\
+					checker_util.c\
 
 SOURCES			=	$(addprefix $(SOURCES_DIR)/, $(SOURCES_FILES))
+SOURCES_BONUS	=	$(addprefix $(SRC_DIR_BONUS)/, $(SRC_FILES_BONUS))
 
 OBJECTS			= 	$(SOURCES:.c=.o)
+OBJECTS_BONUS	= 	$(SOURCES_BONUS:.c=.o)
 
 NAME			=	push_swap
+NAME_BONUS		=	checker
 
 CC				=	gcc
 RM				=	rm -f
@@ -36,10 +46,13 @@ CFLAGS			=	-Wall -Wextra -Werror
 				$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 all:			$(NAME)
+bonus:			$(NAME_BONUS)
 
-$(NAME):		$(LIBFT) $(FT_PRINTF) $(OBJECTS) $(HEADER)
+$(NAME):		$(LIBFT) $(FT_PRINTF) $(OBJECTS)
 				$(CC) $(CFLAGS) $(LIBFT) $(FT_PRINTF) $(OBJECTS)  -o $(NAME)
 
+$(NAME_BONUS):	$(LIBFT) $(FT_PRINTF) $(OBJECTS_BONUS) 
+				$(CC) $(CFLAGS) $(LIBFT) $(OBJECTS_BONUS)  $(FT_PRINTF)  -o $(NAME_BONUS)
 
 
 $(LIBFT):
@@ -58,4 +71,15 @@ fclean:			clean
 				$(RM) $(NAME)
 
 re:				fclean all
+
+clean_bonus:
+				$(MAKE) -C $(LIBFT_PATH) clean
+				$(MAKE) -C $(PRINTF_PATH) clean
+				$(RM) $(OBJECTS_BONUS)
+
+fclean_bonus:	clean_bonus
+				$(MAKE) -C $(LIBFT_PATH) fclean
+				$(RM) $(NAME_BONUS)
+
+re_bonus:		fclean_bonus bonus
 
