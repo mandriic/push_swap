@@ -24,9 +24,9 @@ int	main(int argc, char **argv)
 			ft_pars(&vars, argv);
 		}
 		if (!ft_check(vars.list_a))
-			printf("%s\n", "OK");
+			ft_printf("%s\n", "OK");
 		else
-			printf("%s\n", "KO" );
+			ft_printf("%s\n", "KO" );
 	}
 	return (0);
 }

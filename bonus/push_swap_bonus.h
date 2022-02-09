@@ -21,7 +21,6 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <limits.h>
-# include <stdio.h>
 # define BUFFER_SIZE 1
 
 typedef struct s_vars
